@@ -94,8 +94,8 @@ window.WorkloadSimulator = (() => {
 
     btnRunSim.disabled = true;
     btnRunSim.innerHTML = `
-      <span class="spinner" style="display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; margin-right:6px;"></span>
-      Simulating Workload Execution...
+      <span class="spinner" style="display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; margin-right:6px; vertical-align:middle;"></span>
+      <span style="vertical-align:middle;">Simulating Workload Execution...</span>
     `;
 
     if (simStatusBadge) {
