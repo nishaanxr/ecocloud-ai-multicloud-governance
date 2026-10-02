@@ -1,0 +1,10 @@
+{
+  "name": "agentic-multicloud-governance",
+  "version": "1.0.0",
+  "description": "Agentic AI for Autonomous Cost- and Carbon-Aware Multi-Cloud Resource Governance",
+  "scripts": {
+    "start": "npm --prefix backend start",
+    "test": "npm --prefix backend test",
+    "dev": "npm --prefix backend dev"
+  }
+}

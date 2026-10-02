@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoCloud AI | Autonomous Multi-Cloud Cost & Carbon Governance</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">EcoCloud <span class="brand-badge">AI</span></span>
+          <span class="brand-subtitle">Autonomous Cost- & Carbon-Aware Multi-Cloud Resource Governance</span>
+        </div>
+      </div>
+
+      <div class="nav-meta">
+        <div class="system-status-pill" id="systemStatusPill">
+          <span class="status-dot healthy" id="statusDot"></span>
+          <span id="systemStatusText">Engine Operational</span>
+        </div>
+        <div class="latency-pill" id="latencyPill">
+          <span>API: </span><strong id="apiLatencyVal">12 ms</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="main-content">
+    <!-- Top Filter Bar -->
+    <section class="section-card control-bar">
+      <div class="control-group">
+        <label for="regionSelect" class="control-label">Inventory Region Scope:</label>
+        <div class="select-wrapper">
+          <select id="regionSelect">
+            <option value="india">India (Mumbai / Pune — ap-south-1 / centralindia)</option>
+            <option value="us_east">US East (N. Virginia — us-east-1 / eastus)</option>
+            <option value="europe_west">Europe West (Ireland / Netherlands — eu-west-1 / westeurope)</option>
+            <option value="southeast_asia">Southeast Asia (Singapore — ap-southeast-1 / southeastasia)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-actions">
+        <button id="refreshBtn" class="btn-secondary">
+          <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Sync Live Rates
+        </button>
+      </div>
+    </section>
+
+    <!-- Provider Telemetry Cards -->
+    <section class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Provider Region Code</div>
+        <div class="metric-value font-mono" id="metricRegion">—</div>
+        <div class="metric-subtext" id="metricResidency">Data Residency: —</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Estimated Round-Trip Latency</div>
+        <div class="metric-value font-mono" id="metricLatency">—</div>
+        <div class="metric-subtext">Direct network ingress benchmark</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Grid Carbon Intensity</div>
+        <div class="metric-value font-mono" id="metricCarbon" style="color: #34d399;">—</div>
+        <div class="metric-subtext" id="metricGridZone">Regional Grid Factor (gCO₂eq/kWh)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Database Persistence</div>
+        <div class="metric-value font-mono" id="dbStatus">Connected</div>
+        <div class="metric-subtext" id="uptimeValue">Uptime: 0s</div>
+      </div>
+    </section>
+
+    <!-- Phase 3: Workload Placement & Deterministic Governance Engine -->
+    <section class="section-card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">Workload Placement & Deterministic Policy Engine</h2>
+          <p class="card-description">
+            Submit workload requirements. The engine applies mandatory hard constraints (CPU, RAM, budget, latency, residency) to filter viable compute options.
+          </p>
+        </div>
+        <div class="phase-badge">Deterministic Policy Guardrails</div>
+      </div>
+
+      <form id="workloadForm">
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="field-label" for="workloadName">Workload Name</label>
+            <input type="text" id="workloadName" class="form-input" value="Real-Time Analytics Pipeline" required />
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="reqCpu">Required vCPUs</label>
+            <input type="number" id="reqCpu" class="form-input" value="4" min="1" max="128" required />
+            <span class="field-hint">Minimum mandatory CPU threshold</span>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="reqMemory">Required Memory (GiB)</label>
+            <input type="number" id="reqMemory" class="form-input" value="16" min="1" max="512" required />
+            <span class="field-hint">Minimum mandatory RAM threshold</span>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="reqStorage">Persistent Storage (GB)</label>
+            <input type="number" id="reqStorage" class="form-input" value="50" min="0" max="2000" />
+            <span class="field-hint">Standard block storage capacity</span>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="reqDuration">Estimated Duration (Hours)</label>
+            <input type="number" id="reqDuration" class="form-input" value="48" min="1" max="730" required />
+            <span class="field-hint">Expected compute runtime</span>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="maxCost">Maximum Budget ($ USD)</label>
+            <input type="number" id="maxCost" class="form-input" value="25.00" step="0.5" min="0" />
+            <span class="field-hint">Hard financial constraint limit</span>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="maxLatency">Maximum Latency SLA (ms)</label>
+            <input type="number" id="maxLatency" class="form-input" value="50" min="0" />
+            <span class="field-hint">Max allowable network ingress delay</span>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="dataResidency">Data Residency Boundary</label>
+            <select id="dataResidency" class="form-select">
+              <option value="India" selected>India (Strict Compliance)</option>
+              <option value="United States">United States (Strict Compliance)</option>
+              <option value="European Union">European Union (GDPR Strict)</option>
+              <option value="Singapore">Singapore (Strict Compliance)</option>
+              <option value="Any">Any Territory (Unrestricted)</option>
+            </select>
+            <span class="field-hint">Mandatory geographical data boundary</span>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="optimizationMode">Optimization Objective</label>
+            <select id="optimizationMode" class="form-select">
+              <option value="Cost Optimized" selected>Cost Optimized (Minimize Total Spend)</option>
+              <option value="Carbon Optimized">Carbon Optimized (Minimize CO2eq Emissions)</option>
+              <option value="Performance Optimized">Performance Optimized (Lowest Latency)</option>
+              <option value="Balanced">Balanced (Pareto Multi-Objective Score)</option>
+            </select>
+          </div>
+
+          <div class="form-field" style="grid-column: 1 / -1;">
+            <label class="field-label">Multi-Cloud Evaluation Scope</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="chkAzure" value="AZURE" checked />
+                <span>Microsoft Azure</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="chkAws" value="AWS" checked />
+                <span>Amazon Web Services</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="chkGcp" value="GCP" checked />
+                <span>Google Cloud Platform</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="evaluateBtn" class="btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          Evaluate Placement & Enforce Hard Constraints
+        </button>
+      </form>
+
+      <!-- Results Container (Appears after submission) -->
+      <div id="evaluationResults" class="evaluation-results" style="display: none;">
+        <!-- Summary Counters -->
+        <div class="results-summary-bar">
+          <div class="result-chip">
+            <span>Evaluated Candidates:</span>
+            <span class="chip-number" id="resTotalEvaluated">0</span>
+          </div>
+          <div class="result-chip chip-feasible">
+            <span>Passed Hard Constraints:</span>
+            <span class="chip-number" id="resFeasibleCount">0</span>
+          </div>
+          <div class="result-chip chip-infeasible">
+            <span>Violations / Rejected:</span>
+            <span class="chip-number" id="resInfeasibleCount">0</span>
+          </div>
+        </div>
+
+        <!-- Decision Comparison Grid: Gemini Agent vs Deterministic Baseline -->
+        <div class="decision-comparison-grid">
+          <!-- Gemini Agentic Decision Card -->
+          <div class="decision-card agent-card">
+            <div>
+              <div class="decision-header">
+                <div class="decision-title">
+                  <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  Gemini Agentic Orchestrator
+                </div>
+                <span class="pill-badge pill-live" id="agentSourceBadge">GEMINI AGENT</span>
+              </div>
+              <div class="rec-winner" id="agentWinner">—</div>
+              <div class="rec-metrics">
+                <div>Cost: <strong id="agentCost">—</strong></div>
+                <div>Carbon: <strong id="agentCarbon">—</strong></div>
+                <div>Latency: <strong id="agentLatency">—</strong></div>
+                <div>Region: <strong id="agentRegion">—</strong></div>
+              </div>
+            </div>
+            <div class="rec-reasoning" id="agentReasoning">—</div>
+          </div>
+
+          <!-- Deterministic Baseline Decision Card -->
+          <div class="decision-card baseline-card">
+            <div>
+              <div class="decision-header">
+                <div class="decision-title">
+                  <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  Deterministic Baseline
+                </div>
+                <span class="pill-badge pill-neutral">RULE BENCHMARK</span>
+              </div>
+              <div class="rec-winner" id="recWinner">—</div>
+              <div class="rec-metrics">
+                <div>Cost: <strong id="recCost">—</strong></div>
+                <div>Carbon: <strong id="recCarbon">—</strong></div>
+                <div>Latency: <strong id="recLatency">—</strong></div>
+                <div>Region: <strong id="recRegion">—</strong></div>
+              </div>
+            </div>
+            <div class="rec-reasoning" id="recReasoning">—</div>
+          </div>
+        </div>
+
+        <!-- Comparative Delta Analysis Bar -->
+        <div class="comparative-bar" id="comparativeBar">
+          <div class="comparative-label">Comparative Delta Analysis:</div>
+          <div class="comparative-deltas">
+            <span>Cost Δ: <strong id="deltaCost">$0.00</strong></span>
+            <span>Carbon Δ: <strong id="deltaCarbon">0.000 kg</strong></span>
+            <span>Latency Δ: <strong id="deltaLatency">0 ms</strong></span>
+          </div>
+          <div style="color: var(--text-muted); font-size: 0.8rem;" id="deltaSummary">Evaluating comparative alignment...</div>
+        </div>
+
+        <!-- Autonomous Workload Simulator & Real-Time Telemetry -->
+        <div class="simulation-section" id="simulationSection" style="display: none;">
+          <div class="simulation-header">
+            <div>
+              <div class="simulation-title">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Autonomous Workload Execution Simulator & Live Telemetry
+              </div>
+              <p class="simulation-desc">Executes a staged synthetic micro-benchmark simulating the workload profile locally on the recommended placement. Measures real CPU stress, memory footprint, and computes GSF SCI energy and carbon dissipation without paid cloud bills.</p>
+            </div>
+            <span class="pill-badge pill-neutral" id="simStatusBadge">READY TO SIMULATE</span>
+          </div>
+
+          <!-- Controls Bar -->
+          <div class="sim-controls-bar">
+            <div class="sim-target-info">
+              <span class="sim-target-label">Target Placement:</span>
+              <div id="simTargetPlacement" class="sim-target-badge">—</div>
+            </div>
+            <button type="button" class="btn btn-primary" id="btnRunSimulation">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Execute Workload Simulation
+            </button>
+          </div>
+
+          <!-- Live Progress Bar -->
+          <div class="sim-progress-box" id="simProgressContainer">
+            <div class="sim-progress-header">
+              <span class="sim-stage-name" id="simStageLabel">Idle — Click execute to initiate staged workload</span>
+              <span class="sim-progress-pct" id="simProgressPercent">0%</span>
+            </div>
+            <div class="sim-progress-track">
+              <div class="sim-progress-fill" id="simProgressBar" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Live Telemetry Meters Grid -->
+          <div class="sim-telemetry-grid">
+            <div class="sim-meter-card">
+              <div class="meter-label">CPU Utilization</div>
+              <div class="meter-val" id="simCpuVal">0%</div>
+              <div class="meter-bar-track">
+                <div class="meter-bar-fill" id="simCpuBar" style="width: 0%;"></div>
+              </div>
+              <span class="meter-sub">Synthetic Stress Core Load</span>
+            </div>
+
+            <div class="sim-meter-card">
+              <div class="meter-label">Memory Allocated</div>
+              <div class="meter-val" id="simMemVal">0 MB</div>
+              <div class="meter-bar-track">
+                <div class="meter-bar-fill fill-blue" id="simMemBar" style="width: 0%;"></div>
+              </div>
+              <span class="meter-sub">Heap & RSS Sandbox Buffer</span>
+            </div>
+
+            <div class="sim-meter-card">
+              <div class="meter-label">Thermal Power</div>
+              <div class="meter-val text-amber" id="simPowerVal">0 W</div>
+              <div class="meter-sub">Dynamic TDP + PUE Overhead</div>
+            </div>
+
+            <div class="sim-meter-card">
+              <div class="meter-label">Cumulative Energy</div>
+              <div class="meter-val text-blue" id="simEnergyVal">0.000 kWh</div>
+              <div class="meter-sub">Green Software Foundation SCI</div>
+            </div>
+
+            <div class="sim-meter-card">
+              <div class="meter-label">Grid Carbon Footprint</div>
+              <div class="meter-val text-emerald" id="simCarbonVal">0.0 gCO₂eq</div>
+              <div class="meter-sub">Regional Grid Factor Applied</div>
+            </div>
+
+            <div class="sim-meter-card">
+              <div class="meter-label">Round-Trip Latency</div>
+              <div class="meter-val" id="simLatencyVal">— ms</div>
+              <div style="margin-top: 0.35rem;">
+                <span class="pill-badge pill-neutral" id="simSlaBadge">SLA PENDING</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post-Execution Verification Panel -->
+          <div class="sim-verification-panel" id="simVerificationPanel" style="display: none;">
+            <div class="verif-header">
+              <div class="verif-title">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Placement Verification & Telemetry Reconciliation
+              </div>
+              <span class="verif-db-tag" id="simVerifDbRecord">Persisted to SQLite simulations ledger</span>
+            </div>
+
+            <div class="verif-grid">
+              <div class="verif-item">
+                <span class="verif-label">Workload ID:</span>
+                <strong id="simVerifJobId">—</strong>
+              </div>
+              <div class="verif-item">
+                <span class="verif-label">Simulated Cloud:</span>
+                <strong id="simVerifCloud">—</strong>
+              </div>
+              <div class="verif-item">
+                <span class="verif-label">Compute Instance:</span>
+                <strong id="simVerifInstance">—</strong>
+              </div>
+              <div class="verif-item">
+                <span class="verif-label">Projected Duration:</span>
+                <strong id="simVerifDuration">—</strong>
+              </div>
+              <div class="verif-item">
+                <span class="verif-label">Predicted vs Simulated Cost:</span>
+                <div><span id="simVerifEstCost" class="text-faint">—</span> → <strong id="simVerifSimCost" class="text-amber">—</strong></div>
+              </div>
+              <div class="verif-item">
+                <span class="verif-label">Predicted vs Simulated Carbon:</span>
+                <div><span id="simVerifEstCarbon" class="text-faint">—</span> → <strong id="simVerifSimCarbon" class="text-emerald">—</strong></div>
+              </div>
+              <div class="verif-item">
+                <span class="verif-label">Latency SLA Compliance:</span>
+                <strong id="simVerifSlaStatus" class="status-pass">—</strong>
+              </div>
+            </div>
+
+            <!-- Staged Telemetry Breakdown -->
+            <div class="verif-stages-box">
+              <div class="verif-stages-title">Staged Execution Telemetry Snapshots</div>
+              <div class="verif-stages-list" id="simStagesList"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Tabs -->
+        <div class="tabs-container">
+          <button type="button" class="tab-item active" id="btnFeasibleTab">
+            <span>Feasible Candidates</span>
+            <span class="pill-badge pill-live" id="badgeFeasibleCount">0</span>
+          </button>
+          <button type="button" class="tab-item" id="btnInfeasibleTab">
+            <span>Rejected Candidates & Violations</span>
+            <span class="pill-badge pill-neutral" id="badgeInfeasibleCount">0</span>
+          </button>
+          <button type="button" class="tab-item" id="btnTrajectoryTab">
+            <span>Agentic Tool Calling Audit Trajectory</span>
+            <span class="pill-badge pill-live" id="badgeTrajectoryCount">0 Calls</span>
+          </button>
+        </div>
+
+        <!-- Feasible Table -->
+        <div class="table-container" id="feasibleTableWrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Cloud Provider</th>
+                <th>Instance SKU</th>
+                <th>vCPUs / RAM</th>
+                <th>Total Cost</th>
+                <th>Est. Carbon</th>
+                <th>Latency</th>
+                <th>Data Residency</th>
+              </tr>
+            </thead>
+            <tbody id="feasibleTableBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Infeasible Table -->
+        <div class="table-container" id="infeasibleTableWrapper" style="display: none;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Cloud Provider</th>
+                <th>Instance SKU</th>
+                <th>Specifications</th>
+                <th>Violated Hard Constraints</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody id="infeasibleTableBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Tool Calls Trajectory Wrapper -->
+        <div id="trajectoryWrapper" style="display: none;">
+          <div class="trajectory-list" id="trajectoryList">
+            <div style="text-align: center; color: var(--text-faint); padding: 1.5rem;">
+              No tool calls recorded for this execution.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Multi-Cloud Pricing & Inventory Engine -->
+    <section class="section-card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">Live Compute Inventory & Rate Sheets</h2>
+          <p class="card-description">Inspecting verified rate sheets and compute instance attributes across selected cloud providers.</p>
+        </div>
+        <div class="provenance-tag">
+          <span class="provenance-label">Data Source:</span>
+          <span class="provenance-source" id="provenanceSource">Initializing...</span>
+          <span id="provenanceStatusBadge"></span>
+        </div>
+      </div>
+
+      <!-- Cloud Selector Tabs -->
+      <div class="tabs-container">
+        <button class="tab-item active" data-cloud="AZURE">
+          <span>Microsoft Azure</span>
+          <span class="pill-badge pill-live">LIVE API</span>
+        </button>
+        <button class="tab-item" data-cloud="AWS">
+          <span>Amazon Web Services</span>
+          <span class="pill-badge pill-neutral">PUBLISHED</span>
+        </button>
+        <button class="tab-item" data-cloud="GCP">
+          <span>Google Cloud Platform</span>
+          <span class="pill-badge pill-neutral">PUBLISHED</span>
+        </button>
+      </div>
+
+      <!-- Instances Table -->
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Instance SKU</th>
+              <th>vCPUs</th>
+              <th>Memory</th>
+              <th>Hourly Rate (USD)</th>
+              <th>Instance Family</th>
+              <th>Telemetry Source</th>
+            </tr>
+          </thead>
+          <tbody id="instancesTableBody">
+            <tr>
+              <td colspan="6" class="table-empty">Loading provider instance catalog...</td>
+            </tr>
+          </tbody>
+        </table>
+    <!-- Phase 6: Multi-Cloud Governance Portfolio & Historical Analytics -->
+    <section class="section-card analytics-section">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">Governance Portfolio & Comparative Analytics</h2>
+          <p class="card-description">Auditing cumulative multi-cloud placements, spending governance, carbon abatement, and agentic tool utilization across SQLite records.</p>
+        </div>
+        <div class="control-actions">
+          <button id="btnRefreshAnalytics" class="btn-secondary">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Refresh Analytics
+          </button>
+          <div class="phase-badge">Portfolio Intelligence & Ledger</div>
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="analytics-kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Workloads Governed</div>
+          <div class="kpi-value" id="kpiTotalJobs">0</div>
+          <div class="kpi-subtext"><span id="kpiTotalDecisions">0</span> Placement Decisions</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Cumulative Spend Governed</div>
+          <div class="kpi-value text-amber" id="kpiCumulativeSpend">$0.00</div>
+          <div class="kpi-subtext">Across AWS, Azure, & GCP</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Carbon Footprint Governed</div>
+          <div class="kpi-value text-emerald" id="kpiCumulativeCarbon">0.000 kg</div>
+          <div class="kpi-subtext">Green Software Foundation Standard</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Agentic Tool Invocations</div>
+          <div class="kpi-value text-blue" id="kpiTotalToolCalls">0</div>
+          <div class="kpi-subtext">Native Tool Call Trajectories</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">SLA Compliance Rate</div>
+          <div class="kpi-value" id="kpiSlaCompliance" style="color: #34d399;">100%</div>
+          <div class="kpi-subtext">Zero SLA Policy Violations</div>
+        </div>
+      </div>
+
+      <!-- Multi-Cloud Placement Market Share -->
+      <div class="share-box">
+        <div class="share-title">Multi-Cloud Placement Distribution</div>
+        <div class="share-bar-container">
+          <div class="share-bar-segment segment-aws" id="shareAwsBar" style="width: 33%;"></div>
+          <div class="share-bar-segment segment-azure" id="shareAzureBar" style="width: 33%;"></div>
+          <div class="share-bar-segment segment-gcp" id="shareGcpBar" style="width: 34%;"></div>
+        </div>
+        <div class="share-legend">
+          <div class="legend-item"><span class="legend-dot dot-aws"></span> AWS EC2: <strong id="shareAwsPct">0%</strong></div>
+          <div class="legend-item"><span class="legend-dot dot-azure"></span> Microsoft Azure: <strong id="shareAzurePct">0%</strong></div>
+          <div class="legend-item"><span class="legend-dot dot-gcp"></span> Google Cloud: <strong id="shareGcpPct">0%</strong></div>
+        </div>
+      </div>
+
+      <!-- Recent Decisions History Table -->
+      <div style="margin-top: 1.5rem;">
+        <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.75rem;">Recent Autonomous Governance Decisions Ledger</h3>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Decision #</th>
+                <th>Workload Name</th>
+                <th>Recommended Placement</th>
+                <th>Region</th>
+                <th>Cost ($)</th>
+                <th>Carbon (kg)</th>
+                <th>Engine Source</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <tr>
+                <td colspan="7" class="table-empty">Loading governance history...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture & Diagnostics Drawer -->
+    <section class="section-card system-diagnostics">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">Governance Engine Architecture & Diagnostics</h3>
+          <p class="card-description">State and audit trajectory of deterministic rules and agentic orchestrator.</p>
+        </div>
+        <div class="phase-badge" id="phaseValue">Autonomous Multi-Cloud Engine (Production v1.0)</div>
+      </div>
+
+      <div class="diagnostics-grid">
+        <div class="diagnostics-box">
+          <div class="diagnostics-title">Engine Execution Pipeline</div>
+          <ul class="pipeline-list">
+            <li class="pipeline-step completed">
+              <span class="step-marker">✓</span>
+              <span>1. Multi-Cloud Ingress & SQLite Persistence</span>
+            </li>
+            <li class="pipeline-step completed">
+              <span class="step-marker">✓</span>
+              <span>2. Verified Live Pricing & Carbon Provenance</span>
+            </li>
+            <li class="pipeline-step completed">
+              <span class="step-marker">✓</span>
+              <span>3. Deterministic Hard-Constraint Engine</span>
+            </li>
+            <li class="pipeline-step completed">
+              <span class="step-marker">✓</span>
+              <span>4. Gemini Agentic Tool Calling & Trade-Off Reasoner</span>
+            </li>
+            <li class="pipeline-step completed">
+              <span class="step-marker">✓</span>
+              <span>5. Non-Destructive Workload Execution Simulator</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="diagnostics-box">
+          <div class="diagnostics-title">Raw Telemetry Log (<code>/api/health</code>)</div>
+          <pre class="telemetry-log"><code id="apiResponse">Connecting to backend...</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/simulation.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

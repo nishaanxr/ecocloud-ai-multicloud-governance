@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+**/node_modules/
+package-lock.json
+
+# Environment Variables & Secrets
+.env
+*.env
+backend/.env
+*.env.local
+
+# SQLite Database files
+*.sqlite*
+*.sqlite3*
+*.db*
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite-wal
+*.sqlite-shm
+backend/src/database/*.sqlite*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

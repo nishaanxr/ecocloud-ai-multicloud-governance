@@ -1,0 +1,27 @@
+{
+  "name": "agentic-multicloud-governance-backend",
+  "version": "1.0.0",
+  "description": "Backend API and Agentic AI orchestrator for multi-cloud cost and carbon governance",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node ../tests/providers.test.js && node ../tests/constraints.test.js && node ../tests/agent.test.js && node ../tests/simulation.test.js && node ../tests/analytics.test.js"
+  },
+  "keywords": [
+    "agentic-ai",
+    "multi-cloud",
+    "cost-governance",
+    "carbon-aware",
+    "gemini"
+  ],
+  "author": "Nishaan Gowda S R & Raksha R",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^2.26.0",
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
