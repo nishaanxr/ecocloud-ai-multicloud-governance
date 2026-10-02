@@ -17,6 +17,9 @@
   ],
   "author": "Nishaan Gowda S R & Raksha R",
   "license": "ISC",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "dependencies": {
     "@google/genai": "^2.26.0",
     "better-sqlite3": "^11.8.1",
