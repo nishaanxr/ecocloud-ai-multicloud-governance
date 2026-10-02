@@ -1343,3 +1343,471 @@ body {
 }
 
 
+
+/* =========================================================
+   MOBILE RESPONSIVE STYLES
+   ========================================================= */
+
+/* Tablets and smaller (768px and below) */
+@media (max-width: 768px) {
+  /* Navbar */
+  .nav-container {
+    padding: 0.65rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .brand {
+    gap: 0.6rem;
+  }
+
+  .brand-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+  }
+
+  .brand-logo svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .brand-title {
+    font-size: 0.95rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.68rem;
+    max-width: 180px;
+  }
+
+  .nav-meta {
+    gap: 0.4rem;
+  }
+
+  .system-status-pill {
+    padding: 0.2rem 0.55rem;
+    font-size: 0.7rem;
+  }
+
+  .latency-pill {
+    padding: 0.2rem 0.45rem;
+    font-size: 0.7rem;
+  }
+
+  /* Main Content */
+  .main-content {
+    padding: 1rem 0.75rem 2rem 0.75rem;
+    gap: 1rem;
+  }
+
+  /* Section Cards */
+  .section-card {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  /* Card Headers */
+  .card-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-description {
+    font-size: 0.78rem;
+  }
+
+  .provenance-tag {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+  }
+
+  /* Control Bar */
+  .control-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.85rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .control-group {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Tabs */
+  .tabs-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0;
+  }
+
+  .tabs-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-item {
+    font-size: 0.76rem;
+    padding: 0.55rem 0.7rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .metric-card {
+    padding: 0.85rem 1rem;
+  }
+
+  .metric-value {
+    font-size: 1.15rem;
+  }
+
+  .metric-label {
+    font-size: 0.68rem;
+  }
+
+  .metric-subtext {
+    font-size: 0.72rem;
+  }
+
+  /* Form Grid */
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Results Summary Bar */
+  .results-summary-bar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .result-chip {
+    font-size: 0.78rem;
+    padding: 0.4rem 0.75rem;
+    flex: 1;
+    min-width: fit-content;
+    justify-content: center;
+  }
+
+  /* Decision Comparison Grid */
+  .decision-comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .decision-card {
+    padding: 1rem;
+  }
+
+  .decision-header {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .decision-title {
+    font-size: 0.72rem;
+  }
+
+  .rec-winner {
+    font-size: 1.05rem;
+  }
+
+  .rec-metrics {
+    gap: 0.5rem;
+    font-size: 0.76rem;
+  }
+
+  .rec-reasoning {
+    font-size: 0.76rem;
+    padding: 0.5rem 0.7rem;
+  }
+
+  /* Comparative Delta Bar */
+  .comparative-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .comparative-deltas {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.76rem;
+  }
+
+  /* Trajectory Items */
+  .trajectory-item {
+    padding: 0.7rem 0.85rem;
+  }
+
+  .trajectory-header {
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tool-name-badge {
+    font-size: 0.72rem;
+  }
+
+  .trajectory-body {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .trajectory-code {
+    font-size: 0.68rem;
+    max-height: 120px;
+  }
+
+  /* Tables */
+  .data-table th,
+  .data-table td {
+    padding: 0.55rem 0.7rem;
+    font-size: 0.76rem;
+  }
+
+  .data-table th {
+    font-size: 0.68rem;
+  }
+
+  /* Diagnostics */
+  .diagnostics-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .pipeline-step {
+    font-size: 0.76rem;
+  }
+
+  .telemetry-log {
+    font-size: 0.68rem;
+    max-height: 140px;
+    word-break: break-all;
+    white-space: pre-wrap;
+  }
+
+  /* Simulation Section */
+  .simulation-section {
+    padding: 1rem;
+  }
+
+  .simulation-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .simulation-title {
+    font-size: 0.95rem;
+  }
+
+  .simulation-desc {
+    font-size: 0.76rem;
+  }
+
+  .sim-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .sim-target-info {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .sim-telemetry-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+
+  .sim-meter-card {
+    padding: 0.7rem 0.8rem;
+  }
+
+  .meter-val {
+    font-size: 1.1rem;
+  }
+
+  /* Verification Panel */
+  .sim-verification-panel {
+    padding: 1rem;
+  }
+
+  .verif-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .verif-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .sim-stage-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 0.5rem;
+  }
+
+  .stage-metrics {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  /* Analytics KPIs */
+  .analytics-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .kpi-card {
+    padding: 0.85rem 1rem;
+  }
+
+  .kpi-value {
+    font-size: 1.2rem;
+  }
+
+  .kpi-label {
+    font-size: 0.68rem;
+  }
+
+  /* Share Distribution */
+  .share-legend {
+    gap: 0.75rem;
+    font-size: 0.76rem;
+  }
+}
+
+/* Small phones (480px and below) */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .brand-title {
+    font-size: 0.88rem;
+  }
+
+  .main-content {
+    padding: 0.75rem 0.5rem 1.5rem 0.5rem;
+    gap: 0.75rem;
+  }
+
+  .section-card {
+    padding: 0.85rem;
+    border-radius: 8px;
+  }
+
+  .card-title {
+    font-size: 0.92rem;
+  }
+
+  /* Metrics stack on very small screens */
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .metric-card {
+    padding: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .metric-value {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+  }
+
+  .metric-subtext {
+    display: none;
+  }
+
+  /* Tabs scroll */
+  .tab-item {
+    font-size: 0.72rem;
+    padding: 0.5rem 0.55rem;
+  }
+
+  /* KPIs */
+  .analytics-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .kpi-value {
+    font-size: 1rem;
+  }
+
+  /* Sim Telemetry */
+  .sim-telemetry-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .meter-val {
+    font-size: 0.95rem;
+  }
+
+  /* Verification grid */
+  .verif-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  /* Decision cards */
+  .decision-card {
+    padding: 0.85rem;
+  }
+
+  .rec-winner {
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+
+  .rec-metrics {
+    font-size: 0.72rem;
+    gap: 0.4rem;
+  }
+
+  .rec-reasoning {
+    font-size: 0.72rem;
+  }
+
+  /* Comparative */
+  .comparative-deltas {
+    font-size: 0.72rem;
+    gap: 0.5rem;
+  }
+}
