@@ -61,8 +61,9 @@ async function simulateWorkloadExecution(job, placement, options = {}) {
   for (let i = 0; i < STAGES.length; i++) {
     const stage = STAGES[i];
 
-    // Run compute burst during compute phase
-    if (i === 2) {
+    // Run compute burst only in local development
+    // On hosted environments (Render free tier), skip to prevent OOM crashes
+    if (i === 2 && !process.env.RENDER) {
       executeComputeBurst();
     }
 

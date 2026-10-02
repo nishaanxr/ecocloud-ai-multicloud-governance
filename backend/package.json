@@ -18,7 +18,7 @@
   "author": "Nishaan Gowda S R & Raksha R",
   "license": "ISC",
   "engines": {
-    "node": ">=22.0.0"
+    "node": "20.x"
   },
   "dependencies": {
     "@google/genai": "^2.26.0",
