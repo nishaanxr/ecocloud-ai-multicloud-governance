@@ -206,5 +206,3 @@ agentic-multicloud-governance/
 - **Raksha R** — `1RVU23CSE367` (B.Tech Computer Science & Engineering)  
 - **RV University**, School of Computer Science & Engineering, Bengaluru, India.
 
----
-*Developed under the guidance of School of CSE faculty for Final Year Capstone Project Review (2026).*
