@@ -73,6 +73,9 @@ window.WorkloadSimulator = (() => {
 
     if (btnRunSim) {
       btnRunSim.disabled = false;
+      btnRunSim.style.display = '';
+      btnRunSim.style.alignItems = '';
+      btnRunSim.style.gap = '';
       btnRunSim.innerHTML = `
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -93,9 +96,12 @@ window.WorkloadSimulator = (() => {
     }
 
     btnRunSim.disabled = true;
+    btnRunSim.style.display = 'inline-flex';
+    btnRunSim.style.alignItems = 'center';
+    btnRunSim.style.gap = '8px';
     btnRunSim.innerHTML = `
-      <span class="spinner" style="display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; margin-right:6px; vertical-align:middle;"></span>
-      <span style="vertical-align:middle;">Simulating Workload Execution...</span>
+      <span style="display:block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; flex-shrink:0;"></span>
+      <span>Simulating Workload Execution...</span>
     `;
 
     if (simStatusBadge) {
