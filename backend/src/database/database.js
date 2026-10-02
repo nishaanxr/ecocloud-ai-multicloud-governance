@@ -54,7 +54,39 @@ function checkHealth() {
   }
 }
 
+/**
+ * Graceful shutdown — close SQLite before process exit
+ * Prevents better-sqlite3 assertion failures on hosted environments
+ */
+function closeDatabase() {
+  try {
+    if (db && db.open) {
+      db.close();
+      console.log('[Database] SQLite connection closed gracefully.');
+    }
+  } catch (err) {
+    console.error('[Database] Error closing SQLite:', err.message);
+  }
+}
+
+process.on('SIGTERM', () => {
+  console.log('[Process] SIGTERM received. Shutting down gracefully...');
+  closeDatabase();
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  console.log('[Process] SIGINT received. Shutting down gracefully...');
+  closeDatabase();
+  process.exit(0);
+});
+
+process.on('exit', () => {
+  closeDatabase();
+});
+
 module.exports = {
   db,
-  checkHealth
+  checkHealth,
+  closeDatabase
 };

@@ -9,8 +9,9 @@ const { calculateEnergyConsumption, calculateSimulatedCarbon, captureTelemetrySn
 
 /**
  * Execute a controlled safe micro-compute burst
+ * Reduced iterations for hosted environments (Render free tier = 512MB RAM)
  */
-function executeComputeBurst(iterations = 40000) {
+function executeComputeBurst(iterations = 5000) {
   let hash = 'seed';
   for (let i = 0; i < iterations; i++) {
     hash = crypto.createHash('sha256').update(hash + i).digest('hex');
@@ -62,7 +63,7 @@ async function simulateWorkloadExecution(job, placement, options = {}) {
 
     // Run compute burst during compute phase
     if (i === 2) {
-      executeComputeBurst(60000);
+      executeComputeBurst();
     }
 
     if (stageDelayMs > 0) {
