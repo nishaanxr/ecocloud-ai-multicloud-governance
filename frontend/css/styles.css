@@ -1846,3 +1846,31 @@ body {
 .kpi-updated {
   animation: kpiFlash 1s ease-out;
 }
+
+/* Explicit button loading layout */
+#btnRunSimulation,
+#evaluateBtn,
+#btnRefreshAnalytics {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  line-height: 1 !important;
+}
+
+#btnRunSimulation svg,
+#evaluateBtn svg,
+#btnRefreshAnalytics svg {
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+#btnRunSimulation span,
+#evaluateBtn span,
+#btnRefreshAnalytics span {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  line-height: normal !important;
+}

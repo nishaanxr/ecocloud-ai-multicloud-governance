@@ -135,8 +135,16 @@ window.GovernanceDashboard = (() => {
     }
   }
 
+  // Auto-init on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
   return {
     init,
     refresh: loadAnalytics
   };
 })();
+
