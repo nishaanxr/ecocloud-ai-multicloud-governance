@@ -1814,5 +1814,35 @@ body {
 
 /* Spinner animation for loading states */
 @keyframes spin {
+  from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.btn-spinner {
+  animation: spin 0.75s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.spinning-icon {
+  animation: spin 0.75s linear infinite;
+  display: inline-block;
+  transform-origin: center center;
+}
+
+.control-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@keyframes kpiFlash {
+  0% { color: #38bdf8; text-shadow: 0 0 10px rgba(56, 189, 248, 0.7); }
+  100% { color: var(--text-main); text-shadow: none; }
+}
+
+.kpi-updated {
+  animation: kpiFlash 1s ease-out;
 }

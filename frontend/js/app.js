@@ -220,9 +220,16 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
 
     evaluateBtn.disabled = true;
+    evaluateBtn.style.display = 'inline-flex';
+    evaluateBtn.style.alignItems = 'center';
+    evaluateBtn.style.justifyContent = 'center';
+    evaluateBtn.style.gap = '8px';
     evaluateBtn.innerHTML = `
-      <span class="status-dot healthy" style="animation: pulse 1s infinite;"></span>
-      Orchestrating Gemini Agent & Enforcing Hard Constraints...
+      <svg class="btn-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,0.25)" stroke-width="2.5"></circle>
+        <path d="M12 3a9 9 0 0 1 9 9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"></path>
+      </svg>
+      <span>Orchestrating Gemini Agent &amp; Enforcing Hard Constraints...</span>
     `;
 
     // Gather selected clouds

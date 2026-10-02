@@ -98,9 +98,13 @@ window.WorkloadSimulator = (() => {
     btnRunSim.disabled = true;
     btnRunSim.style.display = 'inline-flex';
     btnRunSim.style.alignItems = 'center';
+    btnRunSim.style.justifyContent = 'center';
     btnRunSim.style.gap = '8px';
     btnRunSim.innerHTML = `
-      <span style="display:block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; flex-shrink:0;"></span>
+      <svg class="btn-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,0.25)" stroke-width="2.5"></circle>
+        <path d="M12 3a9 9 0 0 1 9 9" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"></path>
+      </svg>
       <span>Simulating Workload Execution...</span>
     `;
 
