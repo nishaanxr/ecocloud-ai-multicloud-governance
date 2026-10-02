@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function checkHealth() {
     const startTime = performance.now();
     try {
-      const res = await fetch('/api/health');
+      const res = await fetch(`${API_BASE_URL}/api/health`);
       const elapsed = Math.round(performance.now() - startTime);
 
       if (!res.ok) {
@@ -147,8 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const [pricingRes, carbonRes] = await Promise.all([
-        fetch(`/api/providers/pricing?cloud=${activeCloud}&region=${providerRegion}`),
-        fetch(`/api/providers/carbon?cloud=${activeCloud}&region=${providerRegion}`)
+        fetch(`${API_BASE_URL}/api/providers/pricing?cloud=${activeCloud}&region=${providerRegion}`),
+        fetch(`${API_BASE_URL}/api/providers/carbon?cloud=${activeCloud}&region=${providerRegion}`)
       ]);
 
       if (!pricingRes.ok || !carbonRes.ok) {
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Call /api/decisions/evaluate which runs Gemini Agent, tool calling, and baseline
-      const res = await fetch('/api/decisions/evaluate', {
+      const res = await fetch(`${API_BASE_URL}/api/decisions/evaluate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 5. Fetch Full Job Details (Feasible & Infeasible Candidates)
-      const jobRes = await fetch(`/api/jobs/${data.jobId}`);
+      const jobRes = await fetch(`${API_BASE_URL}/api/jobs/${data.jobId}`);
       if (jobRes.ok) {
         const jobData = await jobRes.json();
         const options = jobData.data?.options || [];

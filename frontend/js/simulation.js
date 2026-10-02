@@ -109,7 +109,7 @@ window.WorkloadSimulator = (() => {
 
     try {
       // 1. Kick off backend simulation
-      const fetchPromise = fetch('/api/simulations/run', {
+      const fetchPromise = fetch(`${API_BASE_URL}/api/simulations/run`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -24,7 +24,7 @@ window.GovernanceDashboard = (() => {
 
   async function loadAnalytics() {
     try {
-      const res = await fetch('/api/analytics/summary');
+      const res = await fetch(`${API_BASE_URL}/api/analytics/summary`);
       if (!res.ok) return;
       const json = await res.json();
       if (!json.success || !json.data) return;
