@@ -456,8 +456,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Region Selection Change
+  const headerRegionLabel = document.getElementById('headerRegionLabel');
+  const REGION_NAMES = {
+    india: 'India (ap-south-1)',
+    us_east: 'US East (us-east-1)',
+    europe_west: 'Europe West (eu-west-1)',
+    southeast_asia: 'Southeast Asia (ap-southeast-1)'
+  };
+
   regionSelect.addEventListener('change', (e) => {
     activeGeo = e.target.value;
+    if (headerRegionLabel && REGION_NAMES[activeGeo]) {
+      headerRegionLabel.textContent = REGION_NAMES[activeGeo];
+    }
     loadProviderData();
   });
 
@@ -465,6 +476,85 @@ document.addEventListener('DOMContentLoaded', () => {
   refreshBtn.addEventListener('click', () => {
     checkHealth();
     loadProviderData();
+  });
+
+  // Sidebar & Enterprise Modal Handlers
+  const appSidebar = document.getElementById('appSidebar');
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const policiesModal = document.getElementById('policiesModal');
+  const settingsModal = document.getElementById('settingsModal');
+  const navOpenPolicies = document.getElementById('navOpenPolicies');
+  const navOpenSettings = document.getElementById('navOpenSettings');
+  const closePoliciesBtn = document.getElementById('closePoliciesBtn');
+  const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+
+  // Mobile menu toggle
+  if (mobileMenuBtn && appSidebar) {
+    mobileMenuBtn.addEventListener('click', () => {
+      appSidebar.classList.toggle('open');
+    });
+  }
+
+  // Policies Modal
+  if (navOpenPolicies && policiesModal) {
+    navOpenPolicies.addEventListener('click', (e) => {
+      e.preventDefault();
+      policiesModal.classList.add('active');
+    });
+  }
+  if (closePoliciesBtn && policiesModal) {
+    closePoliciesBtn.addEventListener('click', () => {
+      policiesModal.classList.remove('active');
+    });
+  }
+
+  // Settings Modal
+  if (navOpenSettings && settingsModal) {
+    navOpenSettings.addEventListener('click', (e) => {
+      e.preventDefault();
+      settingsModal.classList.add('active');
+    });
+  }
+  if (closeSettingsBtn && settingsModal) {
+    closeSettingsBtn.addEventListener('click', () => {
+      settingsModal.classList.remove('active');
+    });
+  }
+
+  // Close modals on overlay backdrop click
+  [policiesModal, settingsModal].forEach(modal => {
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+    }
+  });
+
+  // Close modals on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (policiesModal) policiesModal.classList.remove('active');
+      if (settingsModal) settingsModal.classList.remove('active');
+      if (appSidebar) appSidebar.classList.remove('open');
+    }
+  });
+
+  // Sidebar link active state on click & smooth scroll
+  const navLinks = document.querySelectorAll('.sidebar-nav .nav-link[href^="#"]');
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href');
+      if (targetId && targetId !== '#governance-policies' && targetId !== '#settings') {
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+          if (appSidebar) appSidebar.classList.remove('open');
+        }
+      }
+    });
   });
 
   // Initial Load
